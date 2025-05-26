@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Halal Project</title>
+  <!-- ✅ Google Font -->
+  <link href="https://fonts.google.com/specimen/Roboto" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    header img {
+      height: 60px;
+    }
+    h1 {
+      font-size: 2.2rem;
+      color: #eeeeee;
+      margin: 0;
+    }
+    .search-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      max-width: 500px;
+      margin-bottom: 30px;
+    }
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+    input, select {
+      flex: 1;
+      padding: 12px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 12px 20px;
+      font-size: 1rem;
+      background-color: #8b5cf6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button:hover {
+      background-color: #7c3aed;
+    }
+    .results {
+      width: 100%;
+      max-width: 600px;
+    }
+    .card {
+      background-color: white;
+      padding: 20px;
+      margin-bottom: 16px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      color: #4c1d95;
+      font-weight: 500;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card img {
+      width: 40px;
+      height: 40px;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+    #bgVideo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+    }
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+  position: relative;
+  z-index: 1;
+}
+.top-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: rgba(139, 92, 246, 0.9); /* สีม่วงโปร่งใส */
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+}
+.top-button:hover {
+  background-color: #7c3aed; /* สีม่วงเข้มตอน hover */
+}
+.sparkle {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 0 8px 4px white;
+    pointer-events: none;
+    animation: sparkleFade 1s ease-out forwards;
+    z-index: 9999;
+  }
+
+  @keyframes sparkleFade {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(2); }
+  }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ โลโก้ -->
+  <header>
+    <img src="https://cdn.discordapp.com/attachments/1182689099824500767/1367841653733326909/halal-shape-vector-54841414.jpg?ex=6835088f&is=6833b70f&hm=3b97610570c43ef847219c55c1c070c537c293cdab23c372e65b7c0e6d32e921&" alt="Halal Logo" />
+    <h1>Halal Project</h1>
+  </header>
+
+  <div class="search-container">
+    <div class="row">
+      <input type="text" id="wordInput" placeholder="Type a word..." />
+      <select id="languageSelect">
+        <option value="th">Thai</option>
+        <option value="ch">Chinese</option>
+        <option value="eng">English</option>
+      </select>
+    </div>
+    <button onclick="search()">Search🔍</button>
+  </div>
+  <div class="results" id="results"></div>
+
+  <body>
+
+  <!-- วิดีโอพื้นหลัง -->
+  <video autoplay muted loop playsinline id="bgVideo">
+  <source src="C:\Users\KITTIPAT\Downloads\ทดลอง\video\loop.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<a href="member.html" class="top-button">Member🔗</a>
+
+
+  <script>
+    const allowedWords = ["apple", "company", "โรงงาน", "dog", "elephant"];
+
+    const translations = {
+      company: {
+        th: "โรงงาน",
+        ch: "公司",
+        eng: "Company",
+      },
+      banana: {
+        th: "กล้วย",
+        ja: "バナナ",
+        es: "plátano",
+        fr: "banane"
+      },
+      cat: {
+        th: "แมว",
+        ja: "ねこ",
+        es: "gato",
+        fr: "chat"
+      },
+      dog: {
+        th: "สุนัข",
+        ja: "いぬ",
+        es: "perro",
+        fr: "chien"
+      },
+      elephant: {
+        th: "ช้าง",
+        ja: "ぞう",
+        es: "elefante",
+        fr: "éléphant"
+      }
+    };
+
+    const langMap = {
+      th: 'Thai',
+      ch: 'Chinese',
+      eng: 'English'
+    };
+
+ function search() {
+  const word = document.getElementById('wordInput').value.trim().toLowerCase();
+  const lang = document.getElementById('languageSelect').value;
+  const resultsContainer = document.getElementById('results');
+  resultsContainer.innerHTML = '';
+
+  if (!word) return;
+
+  if (!allowedWords.includes(word)) {
+    const errorCard = document.createElement('div');
+    errorCard.className = 'card error';
+    errorCard.textContent = `The word "${word}" is not allowed.`;
+    resultsContainer.appendChild(errorCard);
+    return;
+  }
+
+  const translation = translations[word][lang] || "Translation not available.";
+
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <span><strong>${word}</strong> in ${langMap[lang]}: ${translation}</span>
+    <button onclick="speak('${translation}', '${getLangCode(lang)}')">🔊</button>
+  `;
+  resultsContainer.appendChild(card);
+}
+function getLangCode(lang) {
+  const langMapForSpeech = {
+    th: 'th-TH',   // ภาษาไทย
+    ch: 'zh-CN',   // ภาษาจีนกลาง
+    eng: 'en-US'   // ภาษาอังกฤษ
+  };
+  return langMapForSpeech[lang] || 'en-US';
+}
+
+function speak(text, langCode) {
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = langCode;
+
+  const voices = speechSynthesis.getVoices();
+  const matchedVoice = voices.find(voice => voice.lang === langCode);
+  if (matchedVoice) {
+    utterance.voice = matchedVoice;
+  }
+
+  speechSynthesis.speak(utterance);
+}
+document.addEventListener('DOMContentLoaded', () => {
+  speechSynthesis.getVoices(); // preload voice list
+});
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const input = document.getElementById('wordInput');
+      input.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+          search();
+        }
+      });
+    });
+
+  </script>
+  
+</body>
+</html>
