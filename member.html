@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>Member🔗</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    video.bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+    h2 {
+  color: white;
+  font-size: 8.0rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+  </style>
+</head>
+<body class="relative">
+  <!-- วิดีโอพื้นหลัง -->
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="C:\Users\KITTIPAT\Downloads\ทดลอง\video\loopmember.mp4" type="video/mp4">
+    วิดีโอไม่รองรับบนเบราว์เซอร์ของคุณ
+  </video>
+  <h2 style="text-align: center; color: #fff; margin-bottom: 10px;">Member</h2>
+
+
+  <!-- เนื้อหา -->
+  <div class="w-full min-h-screen flex flex-col items-center justify-center px-4">
+    <a href="web2.html" class="absolute top-4 left-4 text-white font-semibold">Go Back</a>
+
+    <div class="w-full max-w-xl bg-white bg-opacity-80 rounded-lg p-8 shadow-lg space-y-4">
+      <input type="text" class="w-full h-12 border border-gray-400 rounded p-3" placeholder="นาย กิตติพัศ อินทนู">
+      <input type="text" class="w-full h-12 border border-gray-400 rounded p-3" placeholder="ช่อง 2">
+      <input type="text" class="w-full h-12 border border-gray-400 rounded p-3" placeholder="ช่อง 3">
+      <input type="text" class="w-full h-12 border border-gray-400 rounded p-3" placeholder="ช่อง 4">
+      <input type="text" class="w-full h-12 border border-gray-400 rounded p-3" placeholder="ช่อง 5">
+      <input type="text" class="w-full h-12 border border-gray-400 rounded p-3" placeholder="ช่อง 6">
+    </div>
+  </div>
+</body>
+</html>
